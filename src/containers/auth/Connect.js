@@ -52,36 +52,8 @@ export default Connect = ({navigation}) => {
         {strings.letsYouIn}
       </CText>
 
-      <SocialBtn
-        title={strings.continueWithFacebook}
-        frontIcon={<Facebook_Icon />}
-        // onPress={() => Alert.alert('Facebook Login')}
-      />
-      <SocialBtn
-        title={strings.continueWithGoogle}
-        frontIcon={<Google_Icon />}
-        // onPress={() => Alert.alert('Google Login')}
-      />
+    
 
-      {!!isIOS && (
-        <SocialBtn
-          title={strings.continueWithApple}
-          frontIcon={colors.dark === 'dark' ? <Apple_Light /> : <Apple_Dark />}
-          // onPress={() => Alert.alert('Apple Login')}
-        />
-      )}
-
-      <View style={localStyles.divider}>
-        <View
-          style={[localStyles.orContainer, {backgroundColor: colors.bColor}]}
-        />
-        <CText type={'R18'} style={styles.mh10}>
-          {strings.or}
-        </CText>
-        <View
-          style={[localStyles.orContainer, {backgroundColor: colors.bColor}]}
-        />
-      </View>
 
       <CButton
         title={strings.signWithPassword}

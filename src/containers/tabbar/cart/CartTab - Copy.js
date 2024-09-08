@@ -1,10 +1,10 @@
 // Library Imports
 import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native';
-import React, { useEffect, useRef, useState,useCallback  } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FlashList } from '@shopify/flash-list';
-import { useFocusEffect } from '@react-navigation/native';
+
 // Custom Imports
 import CText from '../../../components/common/CText';
 import CSafeAreaView from '../../../components/common/CSafeAreaView';
@@ -36,7 +36,6 @@ export default function CartTab({ navigation }) {
     const fetchCartData = async () => {
       try {
         const cart = await AsyncStorage.getItem('cart');
-
         const parsedCart = cart ? JSON.parse(cart) : [];
         setCartData(parsedCart);
       } catch (error) {
@@ -46,49 +45,8 @@ export default function CartTab({ navigation }) {
     fetchCartData();
   }, []);
 
-
-
-  useFocusEffect(
-    useCallback(() => {
-      const fetchCartData = async () => {
-        try {
-          const cart = await AsyncStorage.getItem('cart');
-          const parsedCart = cart ? JSON.parse(cart) : [];
-          setCartData(parsedCart);
-        } catch (error) {
-          console.error('Failed to fetch cart data:', error);
-        }
-      };
-      fetchCartData();
-    }, [])
-  );
-
-
-    useEffect(() => {
-    const updateStorage = async () => {
-      try {
-        const jsonValue = JSON.stringify(cartData);
-        await AsyncStorage.setItem('cart', jsonValue);
-      } catch (error) {
-        console.error('Failed to save cart data:', error);
-      }
-    };
-
-    if (cartData.length > 0) {
-      updateStorage();
-    }
-  }, [cartData]);
-    
-
-  const onDeleteItem = (itemId) => {
-    const updatedCartData = cartData.filter(item => item.id !== itemId);
-    setCartData(updatedCartData);
-    AsyncStorage.setItem('cart', JSON.stringify(updatedCartData));
-  };
-
   const onPressSearch = () => navigation.navigate(StackNav.Search);
   const onPressTrash = item => {
-    
     setTrashData(item);
     trashSheetRef.current?.show();
   };
@@ -112,27 +70,27 @@ export default function CartTab({ navigation }) {
     <CartProductComponent
       item={item}
       onPressTrash={() => onPressTrash(item)}
-       onQuantityChange={handleQuantityChange}
-       
+      onQuantityChange={handleQuantityChange}
+
     />
 
   );
 
   const handleQuantityChange = (id, newQuantity) => {
-    const updatedItems = cartData.map(item => {
+    const updatedItems = cartItems.map(item => {
       if (item.id === id) {
         return { ...item, quantity: newQuantity };
       }
       return item;
     });
-    setCartData(updatedItems);
+    setCartItems(updatedItems);
   };
   const calculateTotal = () => {
-    return cartData.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
   };
 
 
-
+  // Calculate total price dynamically
   const totalPrice = cartData.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
 
   return (
@@ -177,7 +135,7 @@ export default function CartTab({ navigation }) {
           title2={strings.onGoingNullDesc}
         />
       )}
-      <TrashItem SheetRef={trashSheetRef} item={trashData} onDeleteItem={onDeleteItem} />
+      <TrashItem SheetRef={trashSheetRef} item={trashData} />
     </CSafeAreaView>
   );
 }

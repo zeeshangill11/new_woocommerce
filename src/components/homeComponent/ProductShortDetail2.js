@@ -10,10 +10,10 @@ import {deviceWidth, moderateScale} from '../../common/constants';
 import {styles} from '../../themes';
 import strings from '../../i18n/strings';
 
-export default function ProductShortDetail(props) {
-  const { item, onPress } = props;
+export default function ProductShortDetail2(props) {
   const colors = useSelector(state => state.theme.theme);
   const [isLiked, setIsLiked] = useState(false);
+  const {item, index, onPress} = props;
 
   const onPressLike = () => setIsLiked(!isLiked);
 
@@ -21,7 +21,10 @@ export default function ProductShortDetail(props) {
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
-      style={[localStyles.productContainer, props.index % 2 === 0 ? styles.mr5 : styles.ml5]}>
+      style={[
+        localStyles.productContainer,
+        index % 2 === 0 ? styles.mr5 : styles.ml5,
+      ]}>
       <TouchableOpacity style={localStyles.likeContainer} onPress={onPressLike}>
         {isLiked ? <LikeWithBg /> : <UnLikeWithBg />}
       </TouchableOpacity>
@@ -33,7 +36,7 @@ export default function ProductShortDetail(props) {
         ]}
       />
       <CText style={[styles.flex, styles.mt10]} numberOfLines={1} type={'b16'}>
-        {item.name}
+       {item.name}
       </CText>
       <View style={localStyles.subItemStyle}>
         <Image
@@ -44,19 +47,18 @@ export default function ProductShortDetail(props) {
           type={'s14'}
           style={styles.mr5}
           color={colors.dark ? colors.grayScale3 : colors.grayScale7}>
-          {item.average_rating}
-          {' | '}
+          {item?.average_rating} 
+          {'  | '}
         </CText>
         <View
           style={[localStyles.paidContainer, {backgroundColor: colors.dark3}]}>
-          <CText type={'s12'}>{item.total_sales + ' ' + strings.sold}</CText>
+          <CText type={'s12'}>{item?.total_sales + ' ' + strings.sold}</CText>
         </View>
       </View>
-      <CText type={'b16'}>{item.price}</CText>
+      <CText type={'b16'}>{item?.price}</CText>
     </TouchableOpacity>
   );
 }
-
 
 const localStyles = StyleSheet.create({
   productContainer: {

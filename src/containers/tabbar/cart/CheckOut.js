@@ -1,5 +1,6 @@
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
+
 import {useSelector} from 'react-redux';
 import {FlashList} from '@shopify/flash-list';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,6 +28,9 @@ import CInput from '../../../components/common/CInput';
 import {StackNav} from '../../../navigation/NavigationKeys';
 import {useNavigation} from '@react-navigation/native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 const RenderFlashListHeader = React.memo(() => {
   const navigation = useNavigation();
   const onPressAddress = () =>
@@ -51,10 +55,39 @@ const RenderFlashListHeader = React.memo(() => {
     </View>
   );
 });
+// order list
+ calculateTotal =  async () => {
+  
+   const cart = await AsyncStorage.getItem('cart');
+    const parsedCart = cart ? JSON.parse(cart) : [];
+    //setCartData(parsedCart);
+    var total=0;
+    total = parsedCart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+   
+    return total;
+};
+
+const calculateFinalAmount = (total, shipping, discount) => {
+  return (total + shipping - discount).toFixed(2);
+};
+
+//const [cartData, setCartData] = useState([]);
+// useEffect(() => {
+//   const fetchCartData = async () => {
+//     try {
+//       const cart = await AsyncStorage.getItem('cart');
+//       const parsedCart = cart ? JSON.parse(cart) : [];
+//       setCartData(parsedCart);
+//     } catch (error) {
+//       console.error('Failed to fetch cart data:', error);
+//     }
+//   };
+//   fetchCartData();
+// }, []);
 
 const RenderFlashListFooter = () => {
   const colors = useSelector(state => state.theme.theme);
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const BlurredStyle = {
     backgroundColor: colors.inputBg,
     borderColor: colors.bColor,
@@ -62,18 +95,52 @@ const RenderFlashListFooter = () => {
   const FocusedStyle = {
     borderColor: colors.textColor,
   };
+  
+   const [chatStyle, setChatStyle] = useState(BlurredStyle);
+
+   const onFocusInput = () => setChatStyle(FocusedStyle);
+
+
+   const onBlurInput = () => setChatStyle(BlurredStyle);
+
+   const onChangePromo = text => setPromoCode(text);
+
+   const onPressShipping = () => navigation.navigate(StackNav.ChooseShipping);
+
+   const onPressAddPromo = () => navigation.navigate(StackNav.AddPromo);
+
+  
+
+  
+  const navigation = useNavigation();
   const [promoCode, setPromoCode] = useState('');
-  const [chatStyle, setChatStyle] = useState(BlurredStyle);
+  const [cartData, setCartData] = useState([]);
 
-  const onFocusInput = () => setChatStyle(FocusedStyle);
+  // Fetch cart data on component mount
+  useEffect(() => {
+    const fetchCartData = async () => {
+      try {
+        const cart = await AsyncStorage.getItem('cart');
+        const parsedCart = cart ? JSON.parse(cart) : [];
+        setCartData(parsedCart);
+      } catch (error) {
+        console.error('Failed to fetch cart data:', error);
+      }
+    };
+    fetchCartData();
+  }, []);
 
-  const onBlurInput = () => setChatStyle(BlurredStyle);
+  // Calculate the total price of the items in the cart
+  const calculateTotal = () => {
+    return cartData.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+  };
 
-  const onChangePromo = text => setPromoCode(text);
+  // Assume no shipping costs and a fixed promo discount for demonstration
+  const total = parseFloat(calculateTotal());
+  const shipping = 0;
+  const promoDiscount = 100; // Assuming a fixed promo discount for demonstration
+  const finalAmount = (total + shipping - promoDiscount).toFixed(2);
 
-  const onPressShipping = () => navigation.navigate(StackNav.ChooseShipping);
-
-  const onPressAddPromo = () => navigation.navigate(StackNav.AddPromo);
 
   const InnerText = props => {
     const {text1, text2, isBottom = true} = props;
@@ -89,7 +156,21 @@ const RenderFlashListFooter = () => {
       </View>
     );
   };
+  
+
+  
+
+  
+  // var total = calculateTotal();
+  // console.log("================>>>")
+  // console.log(total)
+  // const shipping = 0; 
+  // const promoDiscount = 0; // Assuming a fixed promo discount for demonstration
+
+  // const finalAmount = calculateFinalAmount(total, shipping, promoDiscount);
+
   return (
+
     <View style={styles.ph20}>
       <CDivider style={styles.mt20} />
       <CText type={'b18'} style={styles.mv10}>
@@ -145,17 +226,13 @@ const RenderFlashListFooter = () => {
           />
         </TouchableOpacity>
       </View>
-      <View
-        style={[
-          localStyles.innerContainer,
-          {backgroundColor: colors.dark ? colors.dark2 : colors.grayScale1},
-        ]}>
-        <InnerText text1={strings.amount} text2={'$1300'} />
-        <InnerText text1={strings.shipping} text2={'$130'} />
-        <InnerText text1={strings.promo} text2={'- $100'} isBottom={false} />
-        <CDivider style={styles.mv15} />
-        <InnerText text1={strings.amount} text2={'$1200'} isBottom={false} />
-      </View>
+     <View style={styles.ph20}>
+      <InnerText text1={strings.amount} text2={`$${total}`} />
+      <InnerText text1={strings.shipping} text2={`$${shipping}`} />
+      <InnerText text1={strings.promo} text2={`- $${promoDiscount}`} isBottom={false} />
+      <CDivider style={styles.mv15} />
+      <InnerText text1={strings.totalAmount} text2={`$${finalAmount}`} isBottom={false} />
+    </View>
     </View>
   );
 };

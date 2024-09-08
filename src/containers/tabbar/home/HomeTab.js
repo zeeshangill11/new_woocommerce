@@ -9,7 +9,6 @@ import {useNavigation} from '@react-navigation/native';
 import {commonColor, styles} from '../../../themes';
 import {getHeight, moderateScale} from '../../../common/constants';
 import CText from '../../../components/common/CText';
-import {homeCategoryData} from '../../../api/constant';
 import SearchComponent from '../../../components/homeComponent/SearchComponent';
 import HomeHeader from '../../../components/homeComponent/HomeHeader';
 import HomeBanner from '../../../components/homeComponent/HomeBanner';
@@ -18,6 +17,8 @@ import MostPopularCategory from '../../../components/homeComponent/MostPopularCa
 import HomeProductComponent from '../../../components/homeComponent/HomeProductComponent';
 import {StackNav} from '../../../navigation/NavigationKeys';
 import images from '../../../assets/images';
+
+import { getHomePageCategoryWithProducts } from '../../../api/woocommerce';
 
 const RenderHeaderItem = React.memo(() => {
   const colors = useSelector(state => state.theme.theme);
@@ -40,8 +41,8 @@ const RenderHeaderItem = React.memo(() => {
       <HomeHeader />
       <SearchComponent search={search} onSearchInput={onSearchInput} />
       <SubHeader
-        title1={strings.specialOffers}
-        title2={strings.seeAll}
+        title1={'Special Offers'}
+        title2={'See All'}
         onPressSeeAll={onPressSpecialOffer}
         style={styles.mt5}
       />
@@ -58,8 +59,8 @@ const RenderFooterItem = React.memo(() => {
   return (
     <View style={styles.mv30}>
       <SubHeader
-        title1={strings.mostPopular}
-        title2={strings.seeAll}
+        title1={'Most Popular'}
+        title2={'See All'}
         onPressSeeAll={onPressMostPopular}
       />
       <MostPopularCategory />
@@ -70,14 +71,26 @@ const RenderFooterItem = React.memo(() => {
 
 export default function HomeTab({navigation}) {
   const colors = useSelector(state => state.theme.theme);
-  const [extraData, setExtraData] = useState(true);
+  const [categoryData, setCategoryData] = useState([]);
 
   useEffect(() => {
-    setExtraData(!extraData);
-  }, [colors]);
+    const loadCategories = async () => {
+      const data = await getHomePageCategoryWithProducts();
+      setCategoryData(data);
+    };
+    loadCategories();
+  }, []);
 
-  const onPressItem = item =>
-    navigation.navigate(StackNav.ProductCategory, {item: item});
+  //const onPressItem = item => navigation.navigate(StackNav.ProductCategory, {item: item});
+  const onPressItem = item => {
+      
+      console.log(item.products);
+
+      navigation.navigate(StackNav.ProductCategory, {item: {
+          title: item.name,
+          data: item.products  // Make sure 'products' contains all the necessary details
+      }});
+  };
 
   const renderCategoryItem = ({item, index}) => {
     return (
@@ -95,7 +108,7 @@ export default function HomeTab({navigation}) {
             },
           ]}>
           <Image
-            source={item?.image}
+            source={{ uri: item.icon_url ? item.icon_url : undefined }}
             style={[
               localStyles.iconStyle,
               {tintColor: colors.dark ? colors.white : colors.textColor},
@@ -108,7 +121,7 @@ export default function HomeTab({navigation}) {
           align={'center'}
           color={colors.primaryTextColor}
           style={styles.mt10}>
-          {item.title}
+          {item.name}
         </CText>
       </TouchableOpacity>
     );
@@ -117,10 +130,10 @@ export default function HomeTab({navigation}) {
   return (
     <View style={[localStyles.root, {backgroundColor: colors.backgroundColor}]}>
       <FlashList
-        data={homeCategoryData}
-        extraData={extraData}
+        data={categoryData}
+        extraData={colors}
         renderItem={renderCategoryItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item.id.toString()}
         numColumns={4}
         estimatedItemSize={10}
         ListHeaderComponent={<RenderHeaderItem />}

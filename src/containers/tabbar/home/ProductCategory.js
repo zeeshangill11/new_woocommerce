@@ -14,7 +14,7 @@ import {StackNav} from '../../../navigation/NavigationKeys';
 export default function ProductCategory({navigation, route}) {
   const item = route?.params?.item;
   const colors = useSelector(state => state.theme.theme);
-
+  console.log(item);
   const onPressSearch = () => navigation.navigate(StackNav.Search);
 
   const RightIcon = () => {

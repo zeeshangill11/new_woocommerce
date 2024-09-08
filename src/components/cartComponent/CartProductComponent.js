@@ -1,6 +1,8 @@
 // Library Imports
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+//import React, {useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+
 import {useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -12,18 +14,39 @@ import strings from '../../i18n/strings';
 import {TrashDark, TrashLight} from '../../assets/svgs';
 
 export default function CartProductComponent(props) {
-  const {item, isTrash = false, trashIcon = true, onPressTrash} = props;
+  const {item, isTrash = false, trashIcon = true, onPressTrash, onQuantityChange } = props;
   const colors = useSelector(state => state.theme.theme);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(item.quantity);
+
+  useEffect(() => {
+    setQuantity(item.quantity);  
+  }, [item.quantity]);
 
   const onPressRemove = () => {
+    
     if (quantity > 1) {
       setQuantity(prev => prev - 1);
+      onQuantityChange(item.id, item.quantity - 1);
+
+      
     }
   };
 
-  const onPressAdd = () => setQuantity(prev => prev + 1);
+ const onPressAdd = () => {
+    onQuantityChange(item.id, item.quantity + 1);
+  };
 
+  
+  
+  var imageSource ='';
+  
+  if(typeof item.images === 'string' && item?.images && item.images!= "" && item.images.trim() !== '') {
+    imageSource = { uri: item.images };
+  } else {
+    imageSource = { uri: 'https://placehold.co/600x400.png' };
+  }
+ 
+ 
   return (
     <View
       style={[
@@ -31,7 +54,7 @@ export default function CartProductComponent(props) {
         {backgroundColor: colors.dark ? colors.dark2 : colors.grayScale1},
       ]}>
       <Image
-        source={item?.productImage}
+        source={imageSource} 
         style={[
           localStyles.productImageStyle,
           {backgroundColor: colors.dark ? colors.imageBg : colors.white},
@@ -40,7 +63,7 @@ export default function CartProductComponent(props) {
       <View style={localStyles.rightContainer}>
         <View style={localStyles.titleContainer}>
           <CText style={styles.flex} numberOfLines={1} type={'b16'}>
-            {item?.product}
+            {item?.name}
           </CText>
           {!isTrash && trashIcon && (
             <TouchableOpacity onPress={onPressTrash} style={styles.ml5}>
@@ -61,10 +84,11 @@ export default function CartProductComponent(props) {
           {!!item?.size && (
             <CText type={'s12'}>
               {strings.size + ' = ' + item?.size}
-              {'  |  '}
+              {'  |  '} 
             </CText>
           )}
-          <CText type={'s12'}>{strings.qty + ' = 1'}</CText>
+          <CText type={'s12'}>{strings.qty + ' = ' + quantity}</CText>
+
         </View>
         <View style={localStyles.btnContainer}>
           <CText type={'b16'}>{item?.price}</CText>

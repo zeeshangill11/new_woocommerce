@@ -5,11 +5,12 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
+  Alert, // Import Alert from react-native
 } from 'react-native';
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 // Custom Imports
 import CSafeAreaView from '../../../components/common/CSafeAreaView';
 import CHeader from '../../../components/common/CHeader';
@@ -33,9 +34,10 @@ import CDivider from '../../../components/common/CDivider';
 import CButton from '../../../components/common/CButton';
 import ColorComponent from '../../../components/homeComponent/ColorComponent';
 import {StackNav, TabNav} from '../../../navigation/NavigationKeys';
+import {RenderHTML} from "react-native-render-html";
 
 export default function ProductDetail({navigation, route}) {
-  const item = route?.params?.item;
+  const item = route?.params?.item; // Get the item from the route parameters
   const colors = useSelector(state => state.theme.theme);
   const [isLiked, setIsLiked] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -52,18 +54,84 @@ export default function ProductDetail({navigation, route}) {
 
   const onPressReview = () => navigation.navigate(StackNav.Reviews);
 
-  const onPressOffer = () => navigation.navigate(TabNav.CartTab);
+  // Function to handle adding the product to the cart
+  const onAddToCart = async () => {
+      try {
+        const cart = await AsyncStorage.getItem('cart');
+        const cartItems = cart ? JSON.parse(cart) : [];
 
+        const existingItemIndex = cartItems.findIndex(cartItem => cartItem.id === item.id);
+       
+        if (existingItemIndex >= 0) {
+          cartItems[existingItemIndex].quantity += quantity;
+        } else {
+          var imageSrc = item.images?.[0]?.src || "";
+          const itemToAdd = {
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            images: imageSrc,
+            quantity: quantity
+          };
+          cartItems.push(itemToAdd);
+        }
+
+        await AsyncStorage.setItem('cart', JSON.stringify(cartItems));
+        console.log("Cart updated:", cartItems); // This should log the actual cart array
+        //getCartItems();
+
+        Alert.alert(strings.success, `${item?.name} Added to Cart`, [{ text: "OK" }]);
+      } catch (error) {
+        console.error('Error adding item to cart:', error);
+        Alert.alert(strings.error, 'Failed to add item to cart. Please try again.', [{ text: "OK" }]);
+      }
+  };
+
+  const getCartItems = async () => {
+
+    try {
+      const cart = await AsyncStorage.getItem('cart');
+
+      console.log(cart);
+      return cart ? (cart) : [];
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+      return [];
+    }
+    
+
+  };
+
+  const checkCartContents = async () => {
+      try {
+          const cart = await AsyncStorage.getItem('cart');
+          const cartItems = cart ? JSON.parse(cart) : [];
+          console.log("Cart contents:", cartItems); // This should log the actual contents of the cart
+      } catch (error) {
+          console.error('Error fetching cart contents:', error);
+      }
+  };
+
+  const stripHtmlTags = (html) => {
+    // Remove HTML tags
+    const textWithoutHtml = html.replace(/<[^>]*>?/gm, '');
+    // Replace multiple line breaks or spaces with a single space
+    const normalizedText = textWithoutHtml.replace(/\n\s*\n+/g, '\n').trim(); 
+    return normalizedText;  
+  };
+
+  const plainTextDescription = stripHtmlTags(item?.description); 
+  
   return (
     <CSafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ImageBackground source={item?.productImage} style={localStyles.root}>
-          <CHeader title={item?.title} />
+        <ImageBackground source={{uri: item?.images[0]?.src}} style={localStyles.root}>
+          <CHeader title={item?.name} />
         </ImageBackground>
         <View style={styles.mh20}>
           <View style={localStyles.productText}>
             <CText style={styles.flex} numberOfLines={1} type={'b26'}>
-              {item?.product}
+              {item?.name}
             </CText>
             <TouchableOpacity onPress={onPressLike}>
               {isLiked ? (
@@ -85,7 +153,7 @@ export default function ProductDetail({navigation, route}) {
                 localStyles.paidContainer,
                 {backgroundColor: colors.dark3},
               ]}>
-              <CText type={'s12'}>{item?.sold + ' ' + strings.sold}</CText>
+              <CText type={'s12'}>{item?.total_sales + ' ' + strings.sold}</CText>
             </View>
             <Image
               source={images.starFill}
@@ -95,8 +163,8 @@ export default function ProductDetail({navigation, route}) {
               <CText
                 type={'s14'}
                 color={colors.dark ? colors.grayScale3 : colors.grayScale7}>
-                {item?.rating}
-                {' (' + item?.review + ' ' + strings.reviews + ')'}
+                {item?.average_rating}
+                {' (' + item?.rating_count + ' ' + strings.reviews + ')'}
               </CText>
             </TouchableOpacity>
           </View>
@@ -105,13 +173,13 @@ export default function ProductDetail({navigation, route}) {
             {strings.description}
           </CText>
           <CText style={styles.mt5} type={'r14'}>
-            {strings.descText}
+            {plainTextDescription}
           </CText>
           <View style={localStyles.sizeColorContainer}>
             <CText type={'b18'} style={styles.mb10}>
               {strings.color}
             </CText>
-            <ColorComponent isSize={!item?.size?.length} />
+            <ColorComponent isSize={!item?.attributes?.find(attr => attr.name === 'Size')} />
           </View>
           <View style={localStyles.quantityContainer}>
             <CText type={'b18'}>{strings.quantity}</CText>
@@ -161,7 +229,7 @@ export default function ProductDetail({navigation, route}) {
             title={strings.addToCart}
             style={styles.ml10}
             containerStyle={localStyles.addToCartContainer}
-            onPress={onPressOffer}
+            onPress={onAddToCart} // Updated to use the onAddToCart function
             frontIcon={colors.dark ? <CartIconLight /> : <CartIconDark />}
           />
         </View>

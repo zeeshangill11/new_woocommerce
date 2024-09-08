@@ -29,7 +29,7 @@ export default function AddressComponent(props) {
         {colors.dark ? <LocationDark /> : <LocationLight />}
         <View style={localStyles.defaultTextContainer}>
           <View style={localStyles.titleStyle}>
-            <CText type={'B18'}>{item?.title}</CText>
+            <CText type={'B18'}>aa{item?.title}</CText>
             {item?.isDefault && (
               <View
                 style={[

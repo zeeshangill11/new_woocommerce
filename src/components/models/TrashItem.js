@@ -14,12 +14,16 @@ import CDivider from '../common/CDivider';
 import CartProductComponent from '../cartComponent/CartProductComponent';
 
 export default function TrashItem(props) {
-  const {SheetRef, item} = props;
+  const {SheetRef, item,onDeleteItem } = props;
   const colors = useSelector(state => state.theme.theme);
 
   const onPressCancel = () => SheetRef?.current?.hide();
 
-  const onPressYes = () => SheetRef?.current?.hide();
+  
+  const onPressYes = () => {
+    SheetRef?.current?.hide();
+    onDeleteItem(item.id);  // Call the delete function passed via props
+  };
 
   return (
     <ActionSheet

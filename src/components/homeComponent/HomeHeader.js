@@ -15,7 +15,7 @@ import CText from '../common/CText';
 import {moderateScale} from '../../common/constants';
 import {StackNav} from '../../navigation/NavigationKeys';
 import {TabRoute} from '../../navigation/NavigationRoutes';
-
+import {getAsyncStorageData} from '../../utils/helpers';
 function HomeHeader() {
   const navigation = useNavigation();
   const colors = useSelector(state => state.theme.theme);
@@ -24,22 +24,58 @@ function HomeHeader() {
   const onPressLike = () => navigation.navigate(StackNav.MyWishlist);
   const onPressImage = () => navigation.navigate(TabRoute.ProfileTab);
 
+   const [username, setUsername] = React.useState('');
+   const [LoginType, setLoginType] = React.useState('');
+   const [greeting, setGreeting] = React.useState('');
+
+
+   React.useEffect(() => {
+    const get_user_name = async () => {
+      const display_name = await getAsyncStorageData('display_name');
+
+      if (display_name && display_name!="") {
+       
+       setUsername(display_name);
+       setLoginType("1");
+
+      } else {
+       setUsername("Guest");
+       setLoginType("1");
+      }
+    };
+
+    get_user_name();
+  }, []);
+
+  React.useEffect(() => {
+    const determineGreeting = () => {
+      const hour = new Date().getHours(); 
+      if (hour < 12) {
+        return "Good Morning";
+      } else if (hour < 18) {
+        return "Good Afternoon";
+      } else {
+        return "Good Evening";
+      }
+    };
+
+    setGreeting(determineGreeting()); // Set the greeting based on the current time
+  }, []); 
+ 
   return (
     <View style={localStyles.headerContainer}>
       <TouchableOpacity onPress={onPressImage}>
         <Image
-          source={{
-            uri: 'https://images.unsplash.com/photo-1619895862022-09114b41f16f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
-          }}
+          source={require('../../assets/images/user.png')}
           style={localStyles.userImageStyle}
         />
       </TouchableOpacity>
       <View style={localStyles.textContainer}>
         <CText type="m16" numberOfLines={1} color={colors.primaryTextColor}>
-          {'Good Morning 👋'}
+          {greeting}{' 👋'}
         </CText>
         <CText type="B20" numberOfLines={1} color={colors.primaryTextColor}>
-          {'Andrew Ainsley'}
+          {username}
         </CText>
       </View>
       <View style={styles.rowCenter}>

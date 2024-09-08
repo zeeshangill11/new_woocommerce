@@ -1,10 +1,13 @@
 // Library Imports
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {memo, useEffect} from 'react';
+import React, {memo, useEffect,useState} from 'react';
 import {useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Local Imports
+
+import {axios} from 'axios';
+
 import strings from '../../i18n/strings';
 import {styles} from '../../themes';
 import CText from '../../components/common/CText';
@@ -67,6 +70,13 @@ const Login = ({navigation}) => {
     React.useState(BlurredStyle);
   const [isPasswordVisible, setIsPasswordVisible] = React.useState(true);
   const [isCheck, setIsCheck] = React.useState(false);
+
+
+ 
+  const [buttonLabel, setButtonLabel] = useState(strings.signIn); // New state for button label
+
+
+
 
   const onFocusInput = onHighlight => onHighlight(FocusedStyle);
   const onFocusIcon = onHighlight => onHighlight(FocusedIconStyle);
@@ -155,16 +165,65 @@ const Login = ({navigation}) => {
     </TouchableOpacity>
   );
 
+  // const onPressSignWithPassword = async () => {
+  //   await setAsyncStorageData(ACCESS_TOKEN, 'access_token');
+  //   navigation.reset({
+  //     index: 0,
+  //     routes: [
+  //       {
+  //         name: StackNav.TabBar,
+  //       },
+  //     ],
+  //   });
+  // };
+
   const onPressSignWithPassword = async () => {
-    await setAsyncStorageData(ACCESS_TOKEN, 'access_token');
-    navigation.reset({
-      index: 0,
-      routes: [
-        {
-          name: StackNav.TabBar,
-        },
-      ],
-    });
+    if (!email || !password) {
+      alert("Email and password are required.");
+      return;
+    }
+
+    setIsSubmitDisabled(true); // Disable the button and change label during the request
+    setButtonLabel("Please wait");
+
+    const url = `https://fashion.bcreative.ae/wp-json/jwt-auth/v1/token`;
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Cookie': 'your_cookie_if_necessary'
+      },
+      body: JSON.stringify({ username: email, password })
+    };
+
+    try {
+      const response = await fetch(url, requestOptions);
+      const result = await response.json(); // Parsing the JSON response
+
+      if (response.token!="") {
+        
+        alert("You have been successfully logged in.");
+        await setAsyncStorageData(ACCESS_TOKEN, result.token); 
+        await setAsyncStorageData("display_name", result.user_display_name); 
+        await setAsyncStorageData("guest", "0"); 
+        
+        navigation.reset({
+          index: 0,
+          routes: [{ name: StackNav.TabBar }],
+        });
+      } else {
+        // Handling errors returned from the server
+        throw new Error(result.message || "Login failed due to server error");
+      }
+    } catch (error) {
+      // Handle errors in case of failure to connect to the server or other errors
+      console.error("Login Error:", error);
+      alert(error.message || "Failed to login");
+    } finally {
+      // Re-enable the button and reset the label regardless of the outcome
+      setIsSubmitDisabled(false);
+      setButtonLabel(strings.signIn);
+    }
   };
   const onPressPasswordEyeIcon = () => setIsPasswordVisible(!isPasswordVisible);
   const onPressSignUp = () => navigation.navigate(StackNav.Register);
@@ -172,6 +231,7 @@ const Login = ({navigation}) => {
     navigation.navigate(StackNav.ForgotPassword);
 
   return (
+
     <CSafeAreaView style={localStyles.root}>
       <CHeader />
       <KeyBoardAvoidWrapper>
@@ -241,15 +301,15 @@ const Login = ({navigation}) => {
             </CText>
           </TouchableOpacity>
 
-          <CButton
-            title={strings.signIn}
-            type={'S16'}
-            color={isSubmitDisabled && colors.white}
-            containerStyle={localStyles.signBtnContainer}
-            onPress={onPressSignWithPassword}
-            bgColor={isSubmitDisabled && colors.disabledColor}
-            // disabled={isSubmitDisabled}
-          />
+            <CButton
+        title={buttonLabel}
+        type={'S16'}
+        color={isSubmitDisabled ? colors.white : undefined} // Adjust color based on state
+        containerStyle={localStyles.signBtnContainer}
+        onPress={onPressSignWithPassword}
+        bgColor={isSubmitDisabled ? colors.disabledColor : undefined}
+        disabled={isSubmitDisabled}
+      />
           <TouchableOpacity
             onPress={onPressForgotPassword}
             style={localStyles.forgotPasswordContainer}>
@@ -268,9 +328,7 @@ const Login = ({navigation}) => {
                 {backgroundColor: colors.bColor},
               ]}
             />
-            <CText type={'s18'} style={styles.mh10}>
-              {strings.orContinueWith}
-            </CText>
+           
             <View
               style={[
                 localStyles.orContainer,
@@ -279,11 +337,7 @@ const Login = ({navigation}) => {
             />
           </View>
 
-          <View style={localStyles.socialBtnContainer}>
-            {socialIcon.map((item, index) => (
-              <RenderSocialBtn item={item} key={index.toString()} />
-            ))}
-          </View>
+         
 
           <TouchableOpacity
             onPress={onPressSignUp}

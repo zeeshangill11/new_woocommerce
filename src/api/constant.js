@@ -1425,7 +1425,7 @@ const homeCategoryData = [
       {
         id: 9,
         product: 'Hammock Chair',
-        price: '$69.95',
+        price: '$67.95',
         date: 'May 25, 2023 | 2:30 PM',
         status: 'orders',
         productImage: images.chair19,
