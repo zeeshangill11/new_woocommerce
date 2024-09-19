@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {createRef, useState} from 'react';
+import React, {createRef, useState,useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -34,6 +34,8 @@ import {StackNav} from '../../../navigation/NavigationKeys';
 import LogOut from '../../../components/models/LogOut';
 import {removeUserDetail} from '../../../utils/asyncstorage';
 
+import {getAsyncStorageData} from '../../../utils/helpers';
+
 export default function ProfileTab({navigation}) {
   const color = useSelector(state => state.theme.theme);
   const language = useSelector(state => state?.profile?.language);
@@ -41,7 +43,35 @@ export default function ProfileTab({navigation}) {
   const dispatch = useDispatch();
   const LogOutSheetRef = createRef();
 
+
+  const [username, setUsername] = React.useState('');
+  const [useremail, setUseremail] = React.useState('');
+  const [LoginType, setLoginType] = React.useState('')
+
+
   const onPressMenu = () => {};
+
+
+  useEffect(() => {
+    const get_user_name = async () => {
+      const display_name = await getAsyncStorageData('display_name');
+      const user_email = await getAsyncStorageData('user_email');
+
+      if (display_name && display_name!="") {
+       
+       setUsername(display_name);
+       setUseremail(user_email);
+       setLoginType("1");
+
+      } else {
+       setUsername("Guest");
+       setLoginType("1");
+      }
+    };
+
+    get_user_name();
+
+  }, []);
 
   const onPressLightTheme = () => {
     setAsyncStorageData(THEME, 'light');
@@ -134,10 +164,10 @@ export default function ProfileTab({navigation}) {
         </TouchableOpacity>
         <View style={styles.mb20}>
           <CText type="b24" align={'center'}>
-            {'Andrew Ainsley'}
+            {username}
           </CText>
           <CText type="m14" align={'center'} style={styles.mt10}>
-            {'andrew_ainsley@yourdomain.com'}
+            {useremail}
           </CText>
         </View>
         {ProfileSetting.map((item, index) => {

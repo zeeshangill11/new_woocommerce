@@ -13,7 +13,7 @@ import {styles} from '../../themes';
 import strings from '../../i18n/strings';
 import {TrashDark, TrashLight} from '../../assets/svgs';
 
-export default function CartProductComponent(props) {
+export default function CartProductComponentTrash(props) {
   const {item, isTrash = false, trashIcon = true, onPressTrash, onQuantityChange } = props;
   const colors = useSelector(state => state.theme.theme);
   const [quantity, setQuantity] = useState(item.quantity);
@@ -33,7 +33,7 @@ export default function CartProductComponent(props) {
   };
 
  const onPressAdd = () => {
-
+  
     onQuantityChange(item.id, item.quantity + 1);
   };
 
@@ -92,7 +92,7 @@ export default function CartProductComponent(props) {
 
         </View>
         <View style={localStyles.btnContainer}>
-          <CText type={'b16'}>{item?.price} د.إ </CText>
+          <CText type={'b16'}>{item?.price}</CText>
           {isTrash ? (
             <View
               style={[
@@ -113,12 +113,7 @@ export default function CartProductComponent(props) {
                 {backgroundColor: colors.dark3},
               ]}>
               <TouchableOpacity onPress={onPressRemove}>
-                <Ionicons
-                  name={'remove'}
-                  size={moderateScale(18)}
-                  color={colors.dark ? colors.white : colors.black}
-                  style={styles.mr5}
-                />
+                
               </TouchableOpacity>
               <CText
                 type={'b14'}
@@ -127,12 +122,7 @@ export default function CartProductComponent(props) {
                 {quantity}
               </CText>
               <TouchableOpacity onPress={onPressAdd}>
-                <Ionicons
-                  name={'add'}
-                  size={moderateScale(18)}
-                  color={colors.dark ? colors.white : colors.black}
-                  style={styles.ml5}
-                />
+               
               </TouchableOpacity>
             </View>
           )}

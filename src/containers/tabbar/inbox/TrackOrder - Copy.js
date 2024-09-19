@@ -79,27 +79,60 @@ export default function TrackOrder({route, navigation}) {
     );
   };
 
-  const RenderProductss = ({item, index}) => {
-  
-
+  const RenderStatus = ({item, index}) => {
     return (
       <View style={localStyles.statusContainer}>
-          <ProductOrderComponent
-            item={item}
-            isButton={false}
-            isCategory={false}
-          />
-       
+        <View style={styles.itemsCenter}>
+          <View
+            style={[
+              localStyles.statusOuterIcon,
+              {borderColor: colors.textColor},
+            ]}>
+            <View
+              style={[
+                localStyles.statusInnerIcon,
+                {backgroundColor: colors.textColor},
+              ]}
+            />
+          </View>
+          {orderStatus.length - 1 !== index && (
+            <View
+              style={[
+                localStyles.statusLineStyle,
+                {borderColor: colors.primary4},
+              ]}
+            />
+          )}
+        </View>
+        <View style={[styles.flex, styles.itemsStart]}>
+          <View style={localStyles.statusText}>
+            <CText numberOfLines={1} style={styles.flex} type={'s16'}>
+              {item.title}
+            </CText>
+            <CText type={'r12'} color={textColor2} style={styles.ml10}>
+              {item.time}
+            </CText>
+          </View>
+          <CText
+            type={'r12'}
+            numberOfLines={1}
+            style={styles.mb15}
+            color={textColor2}>
+            {item.status}
+          </CText>
+        </View>
       </View>
     );
   };
 
-  const RenderHeader = ({item}) =>{
-    //console.log("Item passed to RenderHeader:", item); 
-
+  const RenderHeader = () => {
     return (
       <View>
-        
+        <ProductOrderComponent
+          item={item}
+          isButton={false}
+          isCategory={false}
+        />
         <View style={localStyles.trackerContainer}>
           <CText type={'b16'}>{strings.tracker}</CText>
         </View>
@@ -113,23 +146,24 @@ export default function TrackOrder({route, navigation}) {
           />
         </View>
         <CText type={'b16'} align={'center'} style={styles.mv15}>
-          Order Status: {item.status}
+          {strings.packetInDelivery}
         </CText>
-     
-        
+        <CDivider style={styles.mv5} />
+        <CText type={'b18'} style={styles.mv15}>
+          {strings.orderStatusDetail}
+        </CText>
       </View>
     );
   };
 
   return (
     <CSafeAreaView>
-      <CHeader title={'Order Details'} rightIcon={<RightIcon />} />
+      <CHeader title={strings.trackOrder} rightIcon={<RightIcon />} />
       <FlashList
-        data={item.line_items}
-        renderItem={RenderProductss}
+        data={orderStatus}
+        renderItem={RenderStatus}
         keyExtractor={(item, index) => index.toString()}
-        ListHeaderComponent={() => <RenderHeader item={item} />} 
-
+        ListHeaderComponent={RenderHeader}
         contentContainerStyle={localStyles.root}
         showsVerticalScrollIndicator={false}
         estimatedItemSize={20}

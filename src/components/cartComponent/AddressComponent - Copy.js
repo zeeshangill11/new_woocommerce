@@ -1,10 +1,7 @@
-import {StyleSheet, TouchableOpacity, View,ActivityIndicator} from 'react-native';
-import React ,{useState,useEffect,useCallback} from 'react';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import React from 'react';
 import {useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {fetchUserAddress} from '../../api/woocommerce';
-
-import {useFocusEffect} from '@react-navigation/native';
 
 // Custom Imports
 import {styles} from '../../themes';
@@ -16,51 +13,10 @@ import {
   LocationLight,
 } from '../../assets/svgs';
 import CText from '../common/CText';
-import {getAsyncStorageData} from '../../utils/helpers';
-
 
 export default function AddressComponent(props) {
   const {item, selectedType, onPressAddress, isSelect} = props;
   const colors = useSelector(state => state.theme.theme);
-  const [address, setAddress] = useState({});
-  const [loading, setLoading] = useState(true); 
-  // useEffect(() => {
-  //   // Function to load address data
-  //   const loadAddress = async () => {
-  //     try {
-  //       var userId =  await getAsyncStorageData('user_id');
-  //       const addr = await fetchUserAddress(userId);
-  //       setAddress(addr);
-  //       setLoading(false); 
-  //     } catch (error) {
-  //       console.error('Failed to fetch address:', error);
-  //       setLoading(false); 
-
-  //     }
-  //   };
-
-  //   loadAddress();
-  // }, []);
-  
-  useFocusEffect(
-    useCallback(() => {
-      const loadAddress = async () => {
-        setLoading(true);
-        try {
-          var userId = await getAsyncStorageData('user_id');
-          const addr = await fetchUserAddress(userId);
-          setAddress(addr);
-        } catch (error) {
-          console.error('Failed to fetch address:', error);
-        }
-        setLoading(false);
-      };
-
-      loadAddress();
-    }, [])
-  );
-
-
 
   return (
     <TouchableOpacity
@@ -73,7 +29,7 @@ export default function AddressComponent(props) {
         {colors.dark ? <LocationDark /> : <LocationLight />}
         <View style={localStyles.defaultTextContainer}>
           <View style={localStyles.titleStyle}>
-            <CText type={'B18'}>Address</CText>
+            <CText type={'B18'}>{item?.title}</CText>
             {item?.isDefault && (
               <View
                 style={[
@@ -84,13 +40,9 @@ export default function AddressComponent(props) {
               </View>
             )}
           </View>
-            {loading ? (
-              <ActivityIndicator size="small" color={colors.primary} />
-            ) : (
-              <CText type={'r14'} style={styles.mt2}>
-                {address.address_1 ? address.address_1 : 'No address available'}
-              </CText>
-            )}
+          <CText type={'r14'} style={styles.mt2}>
+            {item?.address}
+          </CText>
         </View>
       </View>
       {!!isSelect ? (

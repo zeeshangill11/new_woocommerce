@@ -46,8 +46,8 @@ export default function HomeProductComponent() {
         renderItem={({ item }) => (
           <View style={styles.productItem}>
             <Image source={{ uri: item.images[0].src }} style={styles.productImage} />
-            <Text style={styles.productName}>{item.name} aaa </Text>
-            <Text style={styles.productPrice}>{item.price} {item.currency} cc2</Text>
+            <Text style={styles.productName}>{item.name}  </Text>
+            <Text style={styles.productPrice}>{item.price} {item.currency} </Text>
           </View>
         )}
         numColumns={2}

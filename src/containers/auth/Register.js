@@ -1,290 +1,196 @@
 // Library Imports
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import React, {memo, useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Alert } from 'react-native';
+import { useSelector } from 'react-redux';
+import { StackNav } from '../../navigation/NavigationKeys';
+
+import axios from 'axios';
 
 // Local Imports
 import strings from '../../i18n/strings';
-import {styles} from '../../themes';
-import CText from '../../components/common/CText';
-import {ACCESS_TOKEN, getHeight, moderateScale} from '../../common/constants';
+import { getHeight, moderateScale } from '../../common/constants';
 import CHeader from '../../components/common/CHeader';
 import CSafeAreaView from '../../components/common/CSafeAreaView';
-import {
-  Google_Icon,
-  Facebook_Icon,
-  Apple_Light,
-  Apple_Dark,
-  AppLogoDark,
-  AppLogoLight,
-} from '../../assets/svgs';
-import {StackNav} from '../../navigation/NavigationKeys';
+import CText from '../../components/common/CText';
 import CInput from '../../components/common/CInput';
-import KeyBoardAvoidWrapper from '../../components/common/KeyBoardAvoidWrapper';
-import {validateEmail, validatePassword} from '../../utils/validators';
 import CButton from '../../components/common/CButton';
-import {setAsyncStorageData} from '../../utils/helpers';
+import KeyBoardAvoidWrapper from '../../components/common/KeyBoardAvoidWrapper';
 
-const Register = ({navigation}) => {
+
+// Validation functions
+const validateEmail = (email) => {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email) ? '' : 'Invalid email format';
+};
+
+const validatePassword = (password) => {
+  return password.length < 8 ? 'Password must be at least 8 characters' : '';
+};
+
+const validateUsername = (username) => {
+  if (username.length < 4) {
+    return 'Username must be at least 4 characters';
+  }
+  if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+    return 'Username must contain only letters, numbers, and underscores';
+  }
+  return '';
+};
+
+const validateFirstName = (firstName) => {
+  return firstName.trim().length === 0 ? 'First name is required' : '';
+};
+
+// Validation function for last name
+const validateLastName = (lastName) => {
+  return lastName.trim().length === 0 ? 'Last name is required' : '';
+};
+
+// Updated validation function for confirm password
+const validateConfirmPassword = (password, confirmPassword) => {
+  if (confirmPassword.trim().length === 0) {
+    return 'Confirm password is required';
+  }
+  return password !== confirmPassword ? 'Passwords do not match' : '';
+};
+
+
+const Register = ({ navigation }) => {
   const colors = useSelector(state => state.theme.theme);
 
-  const BlurredStyle = {
-    backgroundColor: colors.inputBg,
-    borderColor: colors.bColor,
-  };
-  const FocusedStyle = {
-    borderColor: colors.textColor,
-  };
-  const BlurredIconStyle = colors.grayScale5;
-  const FocusedIconStyle = colors.textColor;
-
-  const socialIcon = [
-    {
-      icon: <Facebook_Icon />,
-      onPress: () => console.log('Facebook'),
-    },
-    {
-      icon: <Google_Icon />,
-      onPress: () => console.log('Google'),
-    },
-    {
-      icon: colors.dark === 'dark' ? <Apple_Light /> : <Apple_Dark />,
-      onPress: () => console.log('Apple'),
-    },
-  ];
-
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [emailError, setEmailError] = React.useState('');
-  const [passwordError, setPasswordError] = React.useState('');
-  const [emailIcon, setEmailIcon] = React.useState(BlurredIconStyle);
-  const [passwordIcon, setPasswordIcon] = React.useState(BlurredIconStyle);
-  const [isSubmitDisabled, setIsSubmitDisabled] = React.useState(true);
-  const [emailInputStyle, setEmailInputStyle] = React.useState(BlurredStyle);
-  const [passwordInputStyle, setPasswordInputStyle] =
-    React.useState(BlurredStyle);
-  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
-  const [isCheck, setIsCheck] = React.useState(false);
-
-  const onFocusInput = onHighlight => onHighlight(FocusedStyle);
-  const onFocusIcon = onHighlight => onHighlight(FocusedIconStyle);
-  const onBlurInput = onUnHighlight => onUnHighlight(BlurredStyle);
-  const onBlurIcon = onUnHighlight => onUnHighlight(BlurredIconStyle);
+  // State for each field and their errors
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(false);
 
   useEffect(() => {
-    if (
-      email.length > 0 &&
-      password.length > 0 &&
-      !emailError &&
-      !passwordError
-    ) {
-      setIsSubmitDisabled(false);
-    } else {
-      setIsSubmitDisabled(true);
-    }
-  }, [email, password, emailError, passwordError]);
-
-  const onChangedEmail = val => {
-    const {msg} = validateEmail(val.trim());
-    setEmail(val.trim());
-    setEmailError(msg);
-  };
-  const onChangedPassword = val => {
-    const {msg} = validatePassword(val.trim());
-    setPassword(val.trim());
-    setPasswordError(msg);
-  };
-
-  const RenderSocialBtn = memo(({item, index}) => {
-    return (
-      <TouchableOpacity
-        key={index}
-        onPress={item.onPress}
-        style={[
-          localStyles.socialBtn,
-          {
-            backgroundColor: colors.inputBg,
-            borderColor: colors.bColor,
-          },
-        ]}>
-        {item.icon}
-      </TouchableOpacity>
+    setIsSubmitDisabled(
+      !(email && password && confirmPassword && firstName && lastName && username &&
+        !emailError && !passwordError && !confirmPasswordError && !firstNameError && !lastNameError && !usernameError)
     );
-  });
-  const onPressSignWithPassword = async () => {
-    await setAsyncStorageData(ACCESS_TOKEN, 'access_token');
-    navigation.reset({
-      index: 0,
-      routes: [
-        {
-          name: StackNav.SetUpProfile,
-          params: {title: strings.fillYourProfile},
-        },
-      ],
-    });
+  }, [email, password, confirmPassword, firstName, lastName, username, emailError, passwordError, confirmPasswordError, firstNameError, lastNameError, usernameError]);
+
+  const handleInputChange = (value, setter, validator) => {
+    setter(value);
+    return validator ? validator(value) : '';
   };
 
-  const onPressPasswordEyeIcon = () => {
-    setIsPasswordVisible(!isPasswordVisible);
+  const validateAllFields = () => {
+    const emailErr = validateEmail(email);
+    const usernameErr = validateUsername(username);
+    const passwordErr = validatePassword(password);
+    const confirmPasswordErr = password === confirmPassword ? '' : 'Passwords do not match';
+    const firstNameErr = validateFirstName(firstName);
+    const lastNameErr  = validateLastName(lastName);
+
+
+    setEmailError(emailErr);
+    setUsernameError(usernameErr);
+    setFirstNameError(firstNameErr);
+    setLastNameError(lastNameErr);
+    setPasswordError(passwordErr);
+    setConfirmPasswordError(confirmPasswordErr);
+
+    return !emailErr && !usernameErr && !passwordErr && !confirmPasswordErr;
   };
 
-  const EmailIcon = () => {
-    return <Ionicons name="mail" size={moderateScale(20)} color={emailIcon} />;
-  };
+  const handleRegister = async () => {
+    if (!validateAllFields()) {
+      Alert.alert("Error", "Please correct the errors before submitting.");
+      return;
+    }
 
-  const onFocusEmail = () => {
-    onFocusInput(setEmailInputStyle);
-    onFocusIcon(setEmailIcon);
-  };
-  const onBlurEmail = () => {
-    onBlurInput(setEmailInputStyle);
-    onBlurIcon(setEmailIcon);
-  };
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('first_name', firstName);
+    formData.append('last_name', lastName);
+    formData.append('username', username);
+    formData.append('password', password);
 
-  const PasswordIcon = () => (
-    <Ionicons
-      name="lock-closed"
-      size={moderateScale(20)}
-      color={passwordIcon}
-    />
-  );
-  const onFocusPassword = () => {
-    onFocusInput(setPasswordInputStyle);
-    onFocusIcon(setPasswordIcon);
-  };
-  const onBlurPassword = () => {
-    onBlurInput(setPasswordInputStyle);
-    onBlurIcon(setPasswordIcon);
-  };
-  const RightPasswordEyeIcon = () => (
-    <TouchableOpacity
-      onPress={onPressPasswordEyeIcon}
-      style={localStyles.eyeIconContainer}>
-      <Ionicons
-        name={isPasswordVisible ? 'eye-off' : 'eye'}
-        size={moderateScale(20)}
-        color={passwordIcon}
-      />
-    </TouchableOpacity>
-  );
+    try {
+      const response = await axios.post('https://fashion.bcreative.ae/wp-json/wc/v3/customers', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': 'Basic Y2tfNzY1ODhiNTgyYzVmNDZmYmM0NWNkM2JhNWJjYTgwODViMGYzZjdjZTpjc19hMjBiZDQ0ZmU1ZjBiNjQ3YTdiMDQ4MTMwZmNkMzExNjBhYWU4ZmY0'  // Replace with your actual token
+        }
+      });
+      if (response.data && response.data.id) {
+        Alert.alert("Success", "Registration successful.");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: StackNav.Login }],  
+        });
 
-  const onPressSignIn = () => {
-    navigation.navigate(StackNav.Login);
+      }
+    } catch (error) {
+     
+      console.error('Registration Error:', error);
+      Alert.alert("Registration Error", error.response?.data?.message || "An error occurred during registration.");
+    }
   };
 
   return (
     <CSafeAreaView>
-      <CHeader />
+      <CHeader title="Register" />
       <KeyBoardAvoidWrapper>
-        <View style={localStyles.mainContainer}>
-          <View style={styles.center}>
-            {colors.dark === 'dark' ? (
-              <AppLogoDark width={moderateScale(100)} height={getHeight(100)} />
-            ) : (
-              <AppLogoLight
-                width={moderateScale(100)}
-                height={getHeight(100)}
-              />
-            )}
-          </View>
-          <CText type={'b32'} align={'center'} style={styles.mv20}>
-            {strings.createYourAccount}
-          </CText>
+        <View style={styles.mainContainer}>
+          {/* Input fields for each user attribute */}
           <CInput
-            placeHolder={strings.email}
-            keyBoardType={'email-address'}
+            placeHolder="Username"
+            _value={username}
+            _errorText={usernameError}
+            toGetTextFieldValue={(val) => setUsernameError(handleInputChange(val, setUsername, validateUsername))}
+          />
+          <CInput
+            placeHolder="Email"
             _value={email}
             _errorText={emailError}
-            autoCapitalize={'none'}
-            insideLeftIcon={() => <EmailIcon />}
-            toGetTextFieldValue={onChangedEmail}
-            inputContainerStyle={[
-              {backgroundColor: colors.inputBg},
-              localStyles.inputContainerStyle,
-              emailInputStyle,
-            ]}
-            inputBoxStyle={[localStyles.inputBoxStyle]}
-            _onFocus={onFocusEmail}
-            onBlur={onBlurEmail}
+            toGetTextFieldValue={(val) => setEmailError(handleInputChange(val, setEmail, validateEmail))}
+          />
+          <CInput
+            placeHolder="First Name"
+            _value={firstName}
+            _errorText={firstNameError}
+            toGetTextFieldValue={(val) => setFirstNameError(handleInputChange(val, setFirstName, validateFirstName))}
           />
 
           <CInput
-            placeHolder={strings.password}
-            keyBoardType={'default'}
+            placeHolder="Last Name"
+            _value={lastName}
+            _errorText={lastNameError}
+            toGetTextFieldValue={(val) => setLastNameError(handleInputChange(val, setLastName, validateLastName))}
+          />
+          <CInput
+            placeHolder="Password"
             _value={password}
             _errorText={passwordError}
-            autoCapitalize={'none'}
-            insideLeftIcon={() => <PasswordIcon />}
-            toGetTextFieldValue={onChangedPassword}
-            inputContainerStyle={[
-              {backgroundColor: colors.inputBg},
-              localStyles.inputContainerStyle,
-              passwordInputStyle,
-            ]}
-            _isSecure={isPasswordVisible}
-            inputBoxStyle={[localStyles.inputBoxStyle]}
-            _onFocus={onFocusPassword}
-            onBlur={onBlurPassword}
-            rightAccessory={() => <RightPasswordEyeIcon />}
+            toGetTextFieldValue={(val) => setPasswordError(handleInputChange(val, setPassword, validatePassword))}
+            isSecureTextEntry={true}
+            _isSecure={true} 
           />
-
-          <TouchableOpacity
-            onPress={() => setIsCheck(!isCheck)}
-            style={localStyles.checkboxContainer}>
-            <Ionicons
-              name={isCheck ? 'square-outline' : 'checkbox'}
-              size={moderateScale(26)}
-              color={colors.textColor}
-            />
-            <CText type={'s14'} style={styles.mh10}>
-              {strings.rememberMe}
-            </CText>
-          </TouchableOpacity>
-
+          <CInput
+            placeHolder="Confirm Password"
+            _value={confirmPassword}
+            _errorText={confirmPasswordError}
+            toGetTextFieldValue={(val) => setConfirmPasswordError(handleInputChange(val, setConfirmPassword, () => validateConfirmPassword(password, val)))}
+            isSecureTextEntry={true}
+            _isSecure={true} 
+          />
           <CButton
-            title={strings.signUp}
-            type={'S16'}
-            color={isSubmitDisabled && colors.white}
-            containerStyle={[localStyles.signBtnContainer]}
-            onPress={onPressSignWithPassword}
-            bgColor={isSubmitDisabled && colors.disabledColor}
-            // disabled={isSubmitDisabled}
+            title="Register"
+            onPress={handleRegister}
+            
           />
-          <View style={localStyles.divider}>
-            <View
-              style={[
-                localStyles.orContainer,
-                {backgroundColor: colors.bColor},
-              ]}
-            />
-            <CText type={'s18'} style={styles.mh10}>
-              {strings.orContinueWith}
-            </CText>
-            <View
-              style={[
-                localStyles.orContainer,
-                {backgroundColor: colors.bColor},
-              ]}
-            />
-          </View>
-
-          <View style={localStyles.socialBtnContainer}>
-            {socialIcon.map((item, index) => (
-              <RenderSocialBtn item={item} key={index.toString()} />
-            ))}
-          </View>
-
-          <TouchableOpacity
-            onPress={onPressSignIn}
-            style={localStyles.signUpContainer}>
-            <CText
-              type={'b16'}
-              color={colors.dark ? colors.grayScale7 : colors.grayScale5}>
-              {strings.AlreadyHaveAccount}
-            </CText>
-            <CText type={'b16'}> {strings.signIn}</CText>
-          </TouchableOpacity>
         </View>
       </KeyBoardAvoidWrapper>
     </CSafeAreaView>
@@ -293,55 +199,9 @@ const Register = ({navigation}) => {
 
 export default Register;
 
-const localStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   mainContainer: {
-    ...styles.ph20,
-  },
-  loginImage: {
-    height: getHeight(160),
-    width: '80%',
-    ...styles.mv20,
-  },
-  divider: {
-    ...styles.rowCenter,
-    ...styles.mv20,
-  },
-  orContainer: {
-    height: moderateScale(1),
-    width: '30%',
-  },
-  signBtnContainer: {
-    ...styles.center,
-    width: '100%',
-    ...styles.mv20,
-  },
-  signUpContainer: {
-    ...styles.rowCenter,
-    ...styles.mv20,
-  },
-  inputContainerStyle: {
-    height: getHeight(60),
-    borderRadius: moderateScale(12),
-    borderWidth: moderateScale(1),
-    ...styles.ph15,
-  },
-  inputBoxStyle: {
-    ...styles.ph15,
-  },
-  checkboxContainer: {
-    ...styles.rowCenter,
-    ...styles.mb20,
-  },
-  socialBtnContainer: {
-    ...styles.rowCenter,
-    ...styles.mv20,
-  },
-  socialBtn: {
-    ...styles.center,
-    height: getHeight(60),
-    width: moderateScale(90),
-    borderRadius: moderateScale(15),
-    borderWidth: moderateScale(1),
-    ...styles.mh10,
+    flex: 1,
+    padding: 20
   },
 });

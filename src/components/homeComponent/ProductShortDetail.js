@@ -52,7 +52,7 @@ export default function ProductShortDetail(props) {
           <CText type={'s12'}>{item.total_sales + ' ' + strings.sold}</CText>
         </View>
       </View>
-      <CText type={'b16'}>{item.price}</CText>
+      <CText type={'b16'}>{item.price} د.إ </CText>
     </TouchableOpacity>
   );
 }

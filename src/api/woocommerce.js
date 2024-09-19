@@ -17,15 +17,33 @@ const apiClient = axios.create({
 });
 
 // Function to fetch most popular products
-export const fetchMostPopularProducts = async () => {
+export const fetchMostPopularProducts = async (category = '', search = '', page = 1) => {
   try {
+    var cat = category.length && category !== 'All' ? category.join(',') : undefined;
+    if (cat) {
+      cat = cat.replace('All,', '').replace(',All', '').replace('All', '');
+    }
+    //console.log(cat);
     const response = await apiClient.get('/products', {
       params: {
-        orderby: 'popularity', // Sort by popularity
-        per_page: 10,          // Number of products to fetch
+        orderby: 'popularity',
+        per_page: 25,
+        search: search,
+        // category !== 'All' ? category : undefined,
+        category2: cat, // Only send category if it's not "All"
+        page: page,
       },
     });
-    return response.data;
+    console.log(response.data);;
+    if(response.data)
+    {
+     return response.data; 
+    }
+    else
+    {
+      return [];
+    }
+ 
   } catch (error) {
     console.error('Error fetching most popular products:', error);
     return [];
@@ -102,3 +120,121 @@ export const getHomePageCategoryWithProducts = async () => {
     return [];
   }
 };
+
+
+
+export const saveAddressData = async (addressData, userId) => {
+  try {
+    // Define the data structure for the billing address
+    const data = {
+      billing: {
+        address_1: addressData.address,
+        city: addressData.city,
+        state: addressData.state,
+        postcode: addressData.postalCode,
+      },
+    };
+
+    // Make the PUT request to WooCommerce API to update user details
+    const response = await apiClient.put(`/customers/${userId}`, data);
+    console.log(response.data);
+    // Return the response data for further use if needed
+    return response.data;
+  } catch (error) {
+    console.error('Error saving address data:', error);
+    throw new Error('Failed to save address data.');
+  }
+};
+
+
+export const fetchUserAddress = async (userId) => {
+  try {
+    const response = await apiClient.get(`/customers/${userId}`);
+    return response.data.billing; // Return the billing address object
+  } catch (error) {
+    console.error('Error fetching user address:', error);
+    throw error;
+  }
+};
+
+export const createOrder = async (orderData) => {
+  try {
+    const response = await apiClient.post('/orders', orderData);
+    return response.data;
+  } catch (error) {
+    console.error('Error placing order:', error);
+    throw error;
+  }
+};
+
+
+export const fetchOngoingOrders = async (userId) => {
+  try {
+    //alert(userId);
+    const response = await apiClient.get('/orders', {
+      params: {
+        status: ['processing', 'on-hold'],
+        per_page: 20, 
+        customer: userId
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching ongoing orders:', error);
+    return [];
+  }
+};
+
+export const fetchCompletedOrders = async (userId) => {
+  try {
+    const response = await apiClient.get('/orders', {
+      params: {
+        status: ['completed'],
+        per_page: 20, 
+        customer: userId
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching completed orders:', error);
+    return [];
+  }
+};
+
+
+
+/*
+please update my code we need run the loop in fetchPromoDiscount and check promo having percent discount or fix discount 
+currently we are only checking the code==promoCode and getting amount  and instead of getting the 
+amount we need to get the type and amount  as adjust our checkout.js as well let me share the complete code
+
+*/
+export const fetchPromoDiscount = async (promoCode) => {
+  try {
+    // Fetch all coupons
+    const response = await apiClient.get(`/coupons`);
+    console.log(response.data);
+
+    // Check if promoCode exists in the coupon list
+    const coupon = response.data.find(coupon => coupon.code.toLowerCase() === promoCode.toLowerCase());
+
+    if (coupon) {
+      // If promo code is found, return the discount type and amount
+      return {
+        type: coupon.discount_type, // Assuming 'discount_type' field specifies 'fixed' or 'percent'
+        value: parseFloat(coupon.amount) // Assuming discount is in 'amount' field
+      };
+    } else {
+      // If promo code is not found, return null
+      console.warn('Promo code does not exist');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching promo code:', error);
+    throw error; // Handle the error appropriately
+  }
+};
+
+

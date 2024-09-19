@@ -49,8 +49,12 @@ import Search from '../containers/tabbar/home/Search';
 import Reviews from '../containers/tabbar/home/Reviews';
 import CheckOut from '../containers/tabbar/cart/CheckOut';
 import AddPromo from '../containers/tabbar/cart/AddPromo';
+import AddressForm from '../containers/tabbar/cart/AddressForm';
 import ChooseShipping from '../containers/tabbar/cart/ChooseShipping';
 import CallingScreen from '../containers/tabbar/inbox/CallingScreen';
+
+
+
 
 export const TabRoute = {
   HomeTab,
@@ -106,4 +110,5 @@ export const StackRoute = {
   AddPromo,
   ChooseShipping,
   CallingScreen,
+  AddressForm,
 };
