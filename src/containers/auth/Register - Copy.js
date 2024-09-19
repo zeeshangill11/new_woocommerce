@@ -1,13 +1,10 @@
 // Library Imports
-import {StyleSheet, View, TouchableOpacity,Alert} from 'react-native';
-import React, {memo, useEffect,useState} from 'react';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import React, {memo, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 // Local Imports
-
-import {axios} from 'axios';
-
 import strings from '../../i18n/strings';
 import {styles} from '../../themes';
 import CText from '../../components/common/CText';
@@ -24,12 +21,12 @@ import {
 } from '../../assets/svgs';
 import {StackNav} from '../../navigation/NavigationKeys';
 import CInput from '../../components/common/CInput';
-import {validateEmail, validatePassword} from '../../utils/validators';
 import KeyBoardAvoidWrapper from '../../components/common/KeyBoardAvoidWrapper';
-import {setAsyncStorageData} from '../../utils/helpers';
+import {validateEmail, validatePassword} from '../../utils/validators';
 import CButton from '../../components/common/CButton';
+import {setAsyncStorageData} from '../../utils/helpers';
 
-const Login = ({navigation}) => {
+const Register = ({navigation}) => {
   const colors = useSelector(state => state.theme.theme);
 
   const BlurredStyle = {
@@ -39,7 +36,6 @@ const Login = ({navigation}) => {
   const FocusedStyle = {
     borderColor: colors.textColor,
   };
-
   const BlurredIconStyle = colors.grayScale5;
   const FocusedIconStyle = colors.textColor;
 
@@ -58,25 +54,29 @@ const Login = ({navigation}) => {
     },
   ];
 
+
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [emailError, setEmailError] = React.useState('');
   const [passwordError, setPasswordError] = React.useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = React.useState('');
+  const [firstNameError, setFirstNameError] = React.useState('');
+  const [lastNameError, setLastNameError] = React.useState('');
+  const [usernameError, setUsernameError] = React.useState('');
+
+
   const [emailIcon, setEmailIcon] = React.useState(BlurredIconStyle);
   const [passwordIcon, setPasswordIcon] = React.useState(BlurredIconStyle);
   const [isSubmitDisabled, setIsSubmitDisabled] = React.useState(true);
   const [emailInputStyle, setEmailInputStyle] = React.useState(BlurredStyle);
   const [passwordInputStyle, setPasswordInputStyle] =
     React.useState(BlurredStyle);
-  const [isPasswordVisible, setIsPasswordVisible] = React.useState(true);
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
   const [isCheck, setIsCheck] = React.useState(false);
-
-
- 
-  const [buttonLabel, setButtonLabel] = useState(strings.signIn); // New state for button label
-
-
-
 
   const onFocusInput = onHighlight => onHighlight(FocusedStyle);
   const onFocusIcon = onHighlight => onHighlight(FocusedIconStyle);
@@ -123,6 +123,22 @@ const Login = ({navigation}) => {
       </TouchableOpacity>
     );
   });
+  const onPressSignWithPassword = async () => {
+    await setAsyncStorageData(ACCESS_TOKEN, 'access_token');
+    navigation.reset({
+      index: 0,
+      routes: [
+        {
+          name: StackNav.SetUpProfile,
+          params: {title: strings.fillYourProfile},
+        },
+      ],
+    });
+  };
+
+  const onPressPasswordEyeIcon = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   const EmailIcon = () => {
     return <Ionicons name="mail" size={moderateScale(20)} color={emailIcon} />;
@@ -144,7 +160,6 @@ const Login = ({navigation}) => {
       color={passwordIcon}
     />
   );
-
   const onFocusPassword = () => {
     onFocusInput(setPasswordInputStyle);
     onFocusIcon(setPasswordIcon);
@@ -165,87 +180,12 @@ const Login = ({navigation}) => {
     </TouchableOpacity>
   );
 
-  // const onPressSignWithPassword = async () => {
-  //   await setAsyncStorageData(ACCESS_TOKEN, 'access_token');
-  //   navigation.reset({
-  //     index: 0,
-  //     routes: [
-  //       {
-  //         name: StackNav.TabBar,
-  //       },
-  //     ],
-  //   });
-  // };
-
-  const onPressSignWithPassword = async () => {
-    if (!email || !password) {
-      alert("Email and password are required.");
-      return;
-    }
-
-    setIsSubmitDisabled(true); // Disable the button and change label during the request
-    setButtonLabel("Please wait");
-    //alert("email--")
-    //alert(email);
-    //alert("password--"+password);
-    const url = `https://fashion.bcreative.ae/wp-json/jwt-auth/v1/token`;
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        
-      },
-      body: JSON.stringify({ username: email, password })
-    };
-
-    try {
-      const response = await fetch(url, requestOptions);
-      const result = await response.json(); // Parsing the JSON response
-      
-      
-
-      if (result && result.token) {
-        
-        console.log(result);
-        Alert.alert("Success", "You have been successfully logged in.");
-        await setAsyncStorageData(ACCESS_TOKEN, result.token); 
-        await setAsyncStorageData("display_name", result.user_display_name); 
-        await setAsyncStorageData("user_email", result.user_email); 
-        
-        await setAsyncStorageData("guest", "0"); 
-        await setAsyncStorageData("user_id", result.user_id); 
-      
-        navigation.reset({
-          index: 0,
-          routes: [{ name: StackNav.TabBar }],
-        });
-      } else {
-        
-
-        await setAsyncStorageData("guest", "1"); 
-        await setAsyncStorageData("user_id", "0"); 
-      
-
-         throw new Error("Invalid credentials");
-
-       
-      }
-    } catch (error) {
-      Alert.alert("Login Failed", error.message || "An error occurred during login.");
-    } finally {
-      // Re-enable the button and reset the label regardless of the outcome
-      setIsSubmitDisabled(false);
-      setButtonLabel(strings.signIn);
-    }
+  const onPressSignIn = () => {
+    navigation.navigate(StackNav.Login);
   };
-  const onPressPasswordEyeIcon = () => setIsPasswordVisible(!isPasswordVisible);
-  const onPressSignUp = () => navigation.navigate(StackNav.Register);
-  const onPressForgotPassword = () =>
-    navigation.navigate(StackNav.ForgotPassword);
 
   return (
-
-    <CSafeAreaView style={localStyles.root}>
+    <CSafeAreaView>
       <CHeader />
       <KeyBoardAvoidWrapper>
         <View style={localStyles.mainContainer}>
@@ -260,9 +200,8 @@ const Login = ({navigation}) => {
             )}
           </View>
           <CText type={'b32'} align={'center'} style={styles.mv20}>
-            {strings.loginYourAccount}
+            {strings.createYourAccount}
           </CText>
-
           <CInput
             placeHolder={strings.email}
             keyBoardType={'email-address'}
@@ -301,67 +240,27 @@ const Login = ({navigation}) => {
             rightAccessory={() => <RightPasswordEyeIcon />}
           />
 
-          <TouchableOpacity
-            onPress={() => setIsCheck(!isCheck)}
-            style={localStyles.checkboxContainer}>
-            <Ionicons
-              name={isCheck ? 'square-outline' : 'checkbox'}
-              size={moderateScale(26)}
-              color={colors.textColor}
-            />
-            <CText type={'s14'} style={styles.mh10}>
-              {strings.rememberMe}
-            </CText>
-          </TouchableOpacity>
-
-          <CButton
-            title={buttonLabel}
-            type={'S16'}
-            color={isSubmitDisabled ? colors.white : undefined} // Adjust color based on state
-            containerStyle={localStyles.signBtnContainer}
-            onPress={onPressSignWithPassword}
-            bgColor={isSubmitDisabled ? colors.disabledColor : undefined}
-            disabled={isSubmitDisabled}
-          />
-
-          <TouchableOpacity
-            onPress={onPressForgotPassword}
-            style={localStyles.forgotPasswordContainer}>
-            <CText
-              type={'s16'}
-              align={'center'}
-              // color={colors.primary}
-              style={styles.mh10}>
-              {strings.forgotPassword}
-            </CText>
-          </TouchableOpacity>
-          <View style={localStyles.divider}>
-            <View
-              style={[
-                localStyles.orContainer,
-                {backgroundColor: colors.bColor},
-              ]}
-            />
-           
-            <View
-              style={[
-                localStyles.orContainer,
-                {backgroundColor: colors.bColor},
-              ]}
-            />
-          </View>
-
          
 
+          <CButton
+            title={strings.signUp}
+            type={'S16'}
+            color={isSubmitDisabled && colors.white}
+            containerStyle={[localStyles.signBtnContainer]}
+            onPress={onPressSignWithPassword}
+            bgColor={isSubmitDisabled && colors.disabledColor}
+            // disabled={isSubmitDisabled}
+          />
+          
           <TouchableOpacity
-            onPress={onPressSignUp}
+            onPress={onPressSignIn}
             style={localStyles.signUpContainer}>
             <CText
               type={'b16'}
               color={colors.dark ? colors.grayScale7 : colors.grayScale5}>
-              {strings.dontHaveAccount}
+              {strings.AlreadyHaveAccount}
             </CText>
-            <CText type={'b16'}> {strings.signUp}</CText>
+            <CText type={'b16'}> {strings.signIn}</CText>
           </TouchableOpacity>
         </View>
       </KeyBoardAvoidWrapper>
@@ -369,18 +268,23 @@ const Login = ({navigation}) => {
   );
 };
 
-export default Login;
+export default Register;
 
 const localStyles = StyleSheet.create({
   mainContainer: {
     ...styles.ph20,
   },
+  loginImage: {
+    height: getHeight(160),
+    width: '80%',
+    ...styles.mv20,
+  },
   divider: {
     ...styles.rowCenter,
-    ...styles.mv30,
+    ...styles.mv20,
   },
   orContainer: {
-    height: getHeight(1),
+    height: moderateScale(1),
     width: '30%',
   },
   signBtnContainer: {
@@ -390,7 +294,7 @@ const localStyles = StyleSheet.create({
   },
   signUpContainer: {
     ...styles.rowCenter,
-    ...styles.mv10,
+    ...styles.mv20,
   },
   inputContainerStyle: {
     height: getHeight(60),

@@ -20,7 +20,7 @@ export default function PaymentSelect(props) {
       ]}>
       <View style={styles.rowCenter}>
         <View style={styles.mh10}>{item.icon}</View>
-        <CText type={'B18'}>{item?.title}</CText>
+        <CText type={'B18'}>{item?.title} </CText>
       </View>
       <Ionicons
         name={

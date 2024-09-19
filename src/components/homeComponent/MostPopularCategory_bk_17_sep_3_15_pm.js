@@ -12,10 +12,9 @@ import strings from '../../i18n/strings';
 import images from '../../assets/images';
 import { fetchCategories } from '../../api/woocommerce'; 
 export default function MostPopularCategory(props) {
-  const {chipsData, isStar = false, onCategorySelect } = props;
+  const {chipsData, isStar = false} = props;
   const colors = useSelector(state => state.theme.theme);
   const [selectedChips, setSelectedChips] = useState([strings.all]);
-
   const [extraData, setExtraData] = useState(true);
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -25,24 +24,19 @@ export default function MostPopularCategory(props) {
   const onPressChips = value => {
     if (selectedChips.includes(value)) {
       setSelectedChips(selectedChips.filter(item => item !== value));
-      onCategorySelect(selectedChips.filter(item => item !== value)); 
     } else {
       setSelectedChips([...selectedChips, value]);
-      onCategorySelect([...selectedChips, value]); 
     }
-
-    
-
   };
 
   useEffect(() => {
     const loadCategories = async () => {
       const fetchedCategories = await fetchCategories();
       if (fetchedCategories && fetchedCategories.length > 0) {
-       
+        // Include "All" at the start of the category list
         setCategories(['All', ...fetchedCategories.map(cat => cat.name)]);
       } else {
-       
+        // Handle the case where no categories are fetched
         setCategories(['All']);
       }
     };

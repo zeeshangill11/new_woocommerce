@@ -69,6 +69,10 @@ export default function CartTab({ navigation }) {
       try {
         const jsonValue = JSON.stringify(cartData);
         await AsyncStorage.setItem('cart', jsonValue);
+
+        await AsyncStorage.removeItem('promoCode');
+        await AsyncStorage.removeItem('discount');
+
       } catch (error) {
         console.error('Failed to save cart data:', error);
       }
@@ -159,7 +163,7 @@ export default function CartTab({ navigation }) {
               <CText type={'m14'} color={colors.dark ? colors.grayScale3 : colors.grayScale6}>
                 {strings.totalPrice}
               </CText>
-              <CText type={'b20'}>{`$${totalPrice}`}</CText>
+              <CText type={'b20'}>{`${totalPrice}`} د.إ </CText>
             </View>
             <CButton
               type={'b16'}
@@ -177,7 +181,7 @@ export default function CartTab({ navigation }) {
           title2={strings.onGoingNullDesc}
         />
       )}
-      <TrashItem SheetRef={trashSheetRef} item={trashData} onDeleteItem={onDeleteItem} />
+      <TrashItem SheetRef={trashSheetRef} onQuantityChange={handleQuantityChange} item={trashData} onDeleteItem={onDeleteItem} />
     </CSafeAreaView>
   );
 }

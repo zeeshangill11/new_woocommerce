@@ -4,17 +4,10 @@ import {StackNav} from '../navigation/NavigationKeys';
 
 const OnBoardingSlide = [
   {
-    text: 'We provide high quality products just for you',
+    text: 'NA',
     img: images.onBording1,
   },
-  {
-    text: 'Your satisfaction is our number one priority',
-    img: images.onBording2,
-  },
-  {
-    text: "Let's fulfill your house needs with Furnia right now!",
-    img: images.onBording3,
-  },
+  
 ];
 
 const GenderData = [

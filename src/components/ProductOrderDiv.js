@@ -1,5 +1,5 @@
 // Library Imports
-import {Image, StyleSheet, View,Text} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
@@ -33,15 +33,21 @@ export default function ProductOrderComponent(props) {
     }
   };
   
-
-  var imageSource ='';
+  const first_item = item.line_items;
+  console.log(item);
+  console.log("===================");
   
-  if(typeof item.image?.src === 'string' && item?.image?.src && item?.image?.src!= "" && item?.image?.src.trim() !== '') {
-    imageSource = { uri: item.image.src };
+  if (Array.isArray(first_item)) {
+    if (first_item.length > 0) {
+      console.log("First item:", first_item[0]); // Log the first item
+    } else {
+      console.log("No line items found.");
+    }
   } else {
-    imageSource = { uri: 'https://placehold.co/600x400.png' };
+    console.log("line_items is not an array.");
   }
-  console.log(imageSource);
+
+  //console.log(first_item);
 
   return (
     <View
@@ -49,18 +55,16 @@ export default function ProductOrderComponent(props) {
         localStyles.productContainer,
         {backgroundColor: colors.dark ? colors.dark2 : colors.grayScale1},
       ]}>
-     <Image
-        source={imageSource}
+      <Image
+        source={item?.productImage}
         style={[
           localStyles.productImageStyle,
           {backgroundColor: colors.dark ? colors.imageBg : colors.white},
         ]}
-        resizeMode="cover" 
-        onError={(e) => console.log("Image loading error: ", e.nativeEvent.error)} 
       />
       <View style={localStyles.rightContainer}>
         <CText numberOfLines={1} type={'b16'}>
-           {item?.name}
+         Order ID: {item?.id}
         </CText>
         <View style={[localStyles.subItemStyle]}>
           <View
@@ -69,28 +73,25 @@ export default function ProductOrderComponent(props) {
               {backgroundColor: item?.color},
             ]}
           />
-   
+          {!!isCategory && (
             <View
               style={[
                 localStyles.paidContainer,
                 {backgroundColor: colors.dark3},
               ]}>
-              <Text >
-              QTY:
-              </Text>
               <CText type={'s12'}>
                 
-                {item?.quantity}
+                {item?.status}
 
               </CText>
             </View>
-        
+          )}
         </View>
         <View style={localStyles.btnContainer}>
           <CText type={'b16'}>{item?.total} د.إ </CText>
           {!!isButton && (
             <CButton
-              title={isCompleted ? strings.leaveReview : strings.trackOrder}
+              title={isCompleted ? strings.leaveReview : 'Order Details'}
               type={'S14'}
               style={styles.ph10}
               color={!!colors.dark && colors.white}

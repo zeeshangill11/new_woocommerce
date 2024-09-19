@@ -8,8 +8,6 @@ import { fetchMostPopularProducts } from '../../api/woocommerce';
 
 export default function HomeProductComponent(props) {
   const navigation = useNavigation();
-  const { search, selectedCategory } = props; 
-
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1); // Track the current page
   const [loading, setLoading] = useState(false); // Track loading state
@@ -17,45 +15,41 @@ export default function HomeProductComponent(props) {
 
   const debounceTimeout = 500; 
   
-  const fetchProducts = async (category, search, pageNumber = 1) => {
+  const fetchProducts = async (search, pageNumber = 1) => {
     setLoading(true);
-    const fetchedProducts = await fetchMostPopularProducts(category, search, pageNumber);
-   
-    if (fetchedProducts.length === 0) {
-      //setHasMore(false); // No more products to load
+    const popularProducts = await fetchMostPopularProducts(search, pageNumber);
+    if (popularProducts.length === 0) {
+      setHasMore(false); // No more products to load
     } else {
-      if (pageNumber === 1) {
-        // Reset products when fetching the first page (e.g., on category change or new search)
-        setProducts(fetchedProducts);
-      } else {
-        // Append new products for subsequent pages
-        setProducts(prevProducts => [...prevProducts, ...fetchedProducts]);
-      }
+      setProducts(prevProducts => [...prevProducts, ...popularProducts]); // Append new products
       setPage(pageNumber); // Update the current page
     }
     setLoading(false);
   };
 
-  // Fetch products based on the selected category or search term
+  // Initial product fetch
+  useEffect(() => {
+    fetchProducts(props.search);
+  }, []); 
+
+  // Fetch products based on search input
   useEffect(() => {
     const handler = setTimeout(() => {
-      setProducts([]);
-      setPage(1); // Reset page to 1 when search or category changes
-      console.log(selectedCategory);
-      fetchProducts(selectedCategory, search, 1); // Fetch products based on search and category
-    }, debounceTimeout); // Add debounce delay to API calls
-    
-    return () => {
-      clearTimeout(handler); // Clear timeout when effect is cleaned up
-    };
-  }, [search, selectedCategory]);
+      if (props.search) {  
+        setProducts([]); // Clear current products when searching
+        fetchProducts(props.search, 1); // Fetch the first page of search results
+      }
+    }, debounceTimeout);
 
- 
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [props.search]);
+
+  // Load more products when scrolling to the bottom
   const handleLoadMore = () => {
-    console.log("zzzzzzzzzzz");
-    if (!loading ) {
-      
-      fetchProducts(selectedCategory, search, page + 1); // Fetch next page of products
+    if (!loading && hasMore) {
+      fetchProducts(props.search, page + 1); // Fetch next page of products
     }
   };
 
@@ -78,11 +72,11 @@ export default function HomeProductComponent(props) {
         data={products}
         renderItem={renderItem}
         numColumns={2}
-        keyExtractor={(item) => (item.id ? item.id.toString() : Math.random().toString())}
-        estimatedItemSize={100}
+        keyExtractor={(item) => item.id.toString()}
+        estimatedItemSize={10}
         onEndReached={handleLoadMore} // Trigger when scrolled to the end
         onEndReachedThreshold={0.5} // Load more when the user scrolls 50% to the bottom
-        ListFooterComponent={loading && <ActivityIndicator size="large" color="#0000ff" />} // Show loading spinner when fetching more products
+        ListFooterComponent={loading && <ActivityIndicator size="large" color="#0000ff" />} // Show a loading spinner at the end
       />
     </View>
   );

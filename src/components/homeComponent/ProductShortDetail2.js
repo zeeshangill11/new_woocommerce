@@ -28,13 +28,23 @@ export default function ProductShortDetail2(props) {
       <TouchableOpacity style={localStyles.likeContainer} onPress={onPressLike}>
         {isLiked ? <LikeWithBg /> : <UnLikeWithBg />}
       </TouchableOpacity>
+      {item?.images?.length > 0 && item.images[0]?.src ? (
       <Image
         source={{ uri: item.images[0].src }}
-        style={[
-          localStyles.productImageStyle,
-          {backgroundColor: colors.dark ? colors.imageBg : colors.grayScale1},
-        ]}
-      />
+          style={[
+            localStyles.productImageStyle,
+            { backgroundColor: colors.dark ? colors.imageBg : colors.grayScale1 },
+          ]}
+        />
+      ) : (
+        <Image
+          source={{uri:'https://placehold.co/600x400'}} 
+          style={[
+            localStyles.productImageStyle,
+            { backgroundColor: colors.dark ? colors.imageBg : colors.grayScale1 },
+          ]}
+        />
+      )}
       <CText style={[styles.flex, styles.mt10]} numberOfLines={1} type={'b16'}>
        {item.name}
       </CText>
@@ -55,7 +65,7 @@ export default function ProductShortDetail2(props) {
           <CText type={'s12'}>{item?.total_sales + ' ' + strings.sold}</CText>
         </View>
       </View>
-      <CText type={'b16'}>{item?.price}</CText>
+      <CText type={'b16'}>{item?.price} د.إ </CText>
     </TouchableOpacity>
   );
 }

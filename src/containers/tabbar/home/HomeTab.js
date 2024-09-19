@@ -1,13 +1,11 @@
-// Library Imports
-import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
-import React, {useState, useEffect, useMemo, useCallback} from 'react';
-import {useSelector} from 'react-redux';
-import {FlashList} from '@shopify/flash-list';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { useSelector } from 'react-redux';
+import { FlashList } from '@shopify/flash-list';
+import { useNavigation } from '@react-navigation/native';
 
-// Custom Imports
-import {commonColor, styles} from '../../../themes';
-import {getHeight, moderateScale} from '../../../common/constants';
+import { commonColor, styles } from '../../../themes';
+import { getHeight, moderateScale } from '../../../common/constants';
 import CText from '../../../components/common/CText';
 import SearchComponent from '../../../components/homeComponent/SearchComponent';
 import HomeHeader from '../../../components/homeComponent/HomeHeader';
@@ -15,24 +13,17 @@ import HomeBanner from '../../../components/homeComponent/HomeBanner';
 import SubHeader from '../../../components/SubHeader';
 import MostPopularCategory from '../../../components/homeComponent/MostPopularCategory';
 import HomeProductComponent from '../../../components/homeComponent/HomeProductComponent';
-import {StackNav} from '../../../navigation/NavigationKeys';
+import { StackNav } from '../../../navigation/NavigationKeys';
 import images from '../../../assets/images';
-
 import { getHomePageCategoryWithProducts } from '../../../api/woocommerce';
 
-const RenderHeaderItem = React.memo(() => {
+const RenderHeaderItem = React.memo(({ search, onSearchInput }) => {
   const colors = useSelector(state => state.theme.theme);
   const navigation = useNavigation();
-  const [search, setSearch] = useState('');
 
-  const onPressSpecialOffer = useCallback(
-    () => navigation.navigate(StackNav.SpecialOffers),
-    [],
-  );
+  const onPressSpecialOffer = () => navigation.navigate(StackNav.SpecialOffers);
 
-  const onSearchInput = useCallback(text => setSearch(text), []);
-
-  const bannerImage = useMemo(() => {
+  const bannerImage = (() => {
     return colors.dark ? images.swiperImageDark2 : images.swiperImageLight2;
   }, [colors]);
 
@@ -51,9 +42,9 @@ const RenderHeaderItem = React.memo(() => {
   );
 });
 
-const RenderFooterItem = React.memo(() => {
+const RenderFooterItem = React.memo(({ search }) => {
   const navigation = useNavigation();
-
+  const [selectedCategory, setSelectedCategory] = useState('All'); 
   const onPressMostPopular = () => navigation.navigate(StackNav.MostPopular);
 
   return (
@@ -63,15 +54,16 @@ const RenderFooterItem = React.memo(() => {
         title2={'See All'}
         onPressSeeAll={onPressMostPopular}
       />
-      <MostPopularCategory />
-      <HomeProductComponent />
+      <MostPopularCategory onCategorySelect={setSelectedCategory} />
+      <HomeProductComponent search={search} selectedCategory={selectedCategory} />
     </View>
   );
 });
 
-export default function HomeTab({navigation}) {
+export default function HomeTab({ navigation }) {
   const colors = useSelector(state => state.theme.theme);
   const [categoryData, setCategoryData] = useState([]);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -81,18 +73,16 @@ export default function HomeTab({navigation}) {
     loadCategories();
   }, []);
 
-  //const onPressItem = item => navigation.navigate(StackNav.ProductCategory, {item: item});
   const onPressItem = item => {
-      
-      console.log(item.products);
-
-      navigation.navigate(StackNav.ProductCategory, {item: {
-          title: item.name,
-          data: item.products  // Make sure 'products' contains all the necessary details
-      }});
+    navigation.navigate(StackNav.ProductCategory, {
+      item: {
+        title: item.name,
+        data: item.products,
+      },
+    });
   };
 
-  const renderCategoryItem = ({item, index}) => {
+  const renderCategoryItem = ({ item, index }) => {
     return (
       <TouchableOpacity
         key={index}
@@ -111,7 +101,7 @@ export default function HomeTab({navigation}) {
             source={{ uri: item.icon_url ? item.icon_url : undefined }}
             style={[
               localStyles.iconStyle,
-              {tintColor: colors.dark ? colors.white : colors.textColor},
+              { tintColor: colors.dark ? colors.white : colors.textColor },
             ]}
           />
         </View>
@@ -128,7 +118,7 @@ export default function HomeTab({navigation}) {
   };
 
   return (
-    <View style={[localStyles.root, {backgroundColor: colors.backgroundColor}]}>
+    <View style={[localStyles.root, { backgroundColor: colors.backgroundColor }]}>
       <FlashList
         data={categoryData}
         extraData={colors}
@@ -136,8 +126,10 @@ export default function HomeTab({navigation}) {
         keyExtractor={(item, index) => item.id.toString()}
         numColumns={4}
         estimatedItemSize={10}
-        ListHeaderComponent={<RenderHeaderItem />}
-        ListFooterComponent={<RenderFooterItem />}
+        ListHeaderComponent={
+          <RenderHeaderItem search={search} onSearchInput={setSearch} />
+        }
+        ListFooterComponent={<RenderFooterItem search={search} />}
         showsVerticalScrollIndicator={false}
       />
     </View>

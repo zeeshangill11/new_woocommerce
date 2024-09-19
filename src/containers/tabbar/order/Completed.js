@@ -1,6 +1,6 @@
 // Library Imports
-import {StyleSheet, View} from 'react-native';
-import React, {useRef, useState} from 'react';
+import {StyleSheet, View,Text,ActivityIndicator } from 'react-native';
+import React, {useRef, useState,useEffect} from 'react';
 import {FlashList} from '@shopify/flash-list';
 
 // Custom Imports
@@ -11,30 +11,53 @@ import {completedOrderData} from '../../../api/constant';
 import LeaveReview from '../../../components/models/LeaveReview';
 import RenderNullComponent from '../../../components/RenderNullComponent';
 
+import {fetchCompletedOrders} from '../../../api/woocommerce'; 
+import ProductOrderDiv from '../../../components/ProductOrderDiv';
+
+import {getAsyncStorageData} from '../../../utils/helpers';
+
+
 export default function Completed() {
   const leaveReviewRef = useRef(null);
   const [selectedItem, setSelectedItem] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState([]);
+
+
+  useEffect(() => {
+    const loadOrders = async () => {
+      setLoading(true);
+      var user_id =  await getAsyncStorageData('user_id');
+      const data = await fetchCompletedOrders(user_id);
+      console.log(data);
+      setOrders(data);
+      setLoading(false);
+    };
+    loadOrders();
+  }, []);
+
 
   const onPressReview = item => {
     setSelectedItem(item);
     leaveReviewRef?.current?.show();
   };
 
+  
   const renderItem = ({item}) => {
-    return (
-      <ProductOrderComponent
-        item={item}
-        isCompleted={true}
-        onPressComplete={onPressReview}
-      />
-    );
+    return <ProductOrderDiv item={item} />;
   };
+
 
   return (
     <View style={localStyles.root}>
-      {!!completedOrderData && completedOrderData.length ? (
+      {loading ? (
+        <View style={localStyles.loadingContainer}>
+          <ActivityIndicator size="large" color="#0000ff" />
+          <Text style={localStyles.loadingText}>Loading Completed Orders...</Text>
+        </View>
+      ) : orders.length > 0 ? (
         <FlashList
-          data={completedOrderData}
+          data={orders}
           renderItem={renderItem}
           keyExtractor={(item, index) => index.toString()}
           showsVerticalScrollIndicator={false}
@@ -44,8 +67,8 @@ export default function Completed() {
         />
       ) : (
         <RenderNullComponent
-          title1={strings.onGoingNullTitle}
-          title2={strings.completedNullDesc}
+          title1="No Completed Orders"
+          title2="There are currently no orders completed."
         />
       )}
       <LeaveReview SheetRef={leaveReviewRef} item={selectedItem} />
@@ -60,4 +83,15 @@ const localStyles = StyleSheet.create({
   contentContainerStyle: {
     ...styles.pb20,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#666',
+  }
+
 });
