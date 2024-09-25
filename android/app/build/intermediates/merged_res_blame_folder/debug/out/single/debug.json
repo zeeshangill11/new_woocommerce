@@ -1,0 +1,598 @@
+[
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_sofa4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_sofa4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-xxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-xxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen9.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen9.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_table3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_table3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_node_modules_reactnativeelementdropdown_src_assets_down.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/node_modules_reactnativeelementdropdown_src_assets_down.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_train.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_train.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_swiperimagelight2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_swiperimagelight2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.furnia.app-main-49:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.furnia.app-main-49:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_onbording1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_onbording1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_categorysofa.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_categorysofa.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair8.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair8.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_cupboard3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_cupboard3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_vase5.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_vase5.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair13.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair13.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_swiperimagelight1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_swiperimagelight1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_categorymore.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_categorymore.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair21.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair21.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_swiperimagedark1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_swiperimagedark1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_categorychair.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_categorychair.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-xhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-xhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-mdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_table2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_table2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair9.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair9.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair20.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair20.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_ongoinglight.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_ongoinglight.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_creditcard.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_creditcard.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-hdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair27.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair27.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_cupboard2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_cupboard2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair14.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair14.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_table5.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_table5.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_logo.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_logo.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_vase4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_vase4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_swiperimagedark2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_swiperimagedark2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair22.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair22.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair18.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair18.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xxxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_starunfill.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_starunfill.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_sofa2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_sofa2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_vase7.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_vase7.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_table8.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_table8.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair15.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair15.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_sofa5.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_sofa5.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_userdark.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_userdark.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/layout_launch_screen.xml.flat",
+        "source": "com.furnia.app-main-49:/layout/launch_screen.xml"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair25.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair25.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair12.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair12.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_walletcard.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_walletcard.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_node_modules_reactnativecountrypickermodal_lib_assets_images_closeios.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/node_modules_reactnativecountrypickermodal_lib_assets_images_closeios.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen8.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen8.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_swiperimagelight3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_swiperimagelight3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_discounticon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_discounticon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair7.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair7.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xxxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_shipping1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_shipping1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp9.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp9.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_splash.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_splash.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_locationicon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_locationicon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xxhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp6.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp6.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_node_modules_reactnativecountrypickermodal_lib_assets_images_close.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/node_modules_reactnativecountrypickermodal_lib_assets_images_close.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair24.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair24.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_vase2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_vase2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-xxxhdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-xxxhdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable_splash_logo.png.flat",
+        "source": "com.furnia.app-main-49:/drawable/splash_logo.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_table7.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_table7.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair16.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair16.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_categorylamp.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_categorylamp.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_swiperimagedark4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_swiperimagedark4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_mapimage.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_mapimage.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_plane.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_plane.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_checkunactive.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_checkunactive.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_shipping.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_shipping.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xxhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_barcodeimage.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_barcodeimage.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen5.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen5.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair10.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair10.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp5.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp5.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair23.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair23.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_starfill.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_starfill.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_table6.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_table6.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp7.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp7.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair17.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair17.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_walleticon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_walleticon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xhdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.furnia.app-main-49:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_delivered.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_delivered.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_profileicon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_profileicon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen6.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen6.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_sofa1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_sofa1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_ship.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_ship.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair5.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair5.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_vase1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_vase1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_onbording3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_onbording3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_user.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_user.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-hdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-hdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp8.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp8.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_courier.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_courier.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair11.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair11.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-mdpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_swiperimagelight4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_swiperimagelight4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_creditcardicon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_creditcardicon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_categoryvase.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_categoryvase.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen7.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen7.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_ongoingdark.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_ongoingdark.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backicon.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backicon.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair26.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair26.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_cupboard1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_cupboard1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_shipping2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_shipping2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair6.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair6.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_vase3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_vase3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_chair19.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_chair19.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_table4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_table4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_node_modules_reactnativeelementdropdown_src_assets_close.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/node_modules_reactnativeelementdropdown_src_assets_close.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_sofa3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_sofa3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_node_modules_reactnavigation_elements_src_assets_backiconmask.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/node_modules_reactnavigation_elements_src_assets_backiconmask.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_onbording2.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_onbording2.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_swiperimagedark3.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_swiperimagedark3.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_lamp10.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_lamp10.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_checkactive.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_checkactive.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_categorykitchen.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_categorykitchen.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_cupboard4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_cupboard4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_table1.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_table1.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_categorytable.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_categorytable.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_categorycupboard.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_categorycupboard.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_kitchen4.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_kitchen4.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.furnia.app-main-49:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_userlight.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_userlight.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_barcodeimagelight.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_barcodeimagelight.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_seller.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_seller.png"
+    },
+    {
+        "merged": "com.furnia.app-merged_res-47:/drawable-mdpi_src_assets_images_vase6.png.flat",
+        "source": "com.furnia.app-main-49:/drawable-mdpi/src_assets_images_vase6.png"
+    }
+]
