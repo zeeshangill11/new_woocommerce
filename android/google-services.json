@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1006829691514",
+    "project_id": "rn-notification-14346",
+    "storage_bucket": "rn-notification-14346.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006829691514:android:816906aca3fa072f53d1c3",
+        "android_client_info": {
+          "package_name": "com.furnia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaA96tZLxhZ62gQgtVDwsdtaFBc-rd8UU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
