@@ -41,15 +41,24 @@ export default function Address({route, navigation}) {
     }
   };
 
-  const renderAddressList = ({item}) => {
-    return (
-      <AddressComponent
-        item={item}
-        onPressAddress={() => onPressAddress(item)}
-        selectedType={selectedType}
-        isSelect={!!itm}
-      />
-    );
+  let isFirstItemRendered = false; // Declare a flag to ensure only the first item renders
+
+  const renderAddressList = ({ item, index }) => {
+    // Check if it's the first item and if the first item hasn't been rendered yet
+    if (index === 0 && !isFirstItemRendered) {
+      isFirstItemRendered = true; // Mark the first item as rendered
+      console.log(item);
+      return (
+        <AddressComponent
+          item={item}
+          onPressAddress={() => onPressAddress(item)}
+          selectedType={selectedType}
+          isSelect={!!itm}
+        />
+      );
+    }
+    // Return null for all other items
+    return null;
   };
 
   const FlashListFooter = () => {
@@ -82,14 +91,7 @@ export default function Address({route, navigation}) {
         ListFooterComponent={FlashListFooter}
         estimatedItemSize={20}
       />
-      <View style={styles.ph20}>
-        <CButton
-          title={!!itm ? strings.apply : strings.addNewAddress}
-          type={'S16'}
-          containerStyle={styles.mv10}
-          onPress={onPressAdd}
-        />
-      </View>
+     
     </CSafeAreaView>
   );
 }

@@ -5,6 +5,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
@@ -24,5 +28,11 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <meta-data
+        android:name="com.onesignal.NotificationServiceExtension"
+        android:value="DISABLED" />
+      <meta-data
+            android:name="onesignal_app_id"
+            android:value="e940b293-c98f-42d0-9f7a-7eea9dba9376" />
     </application>
 </manifest>
